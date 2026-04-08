@@ -45,16 +45,16 @@ func NewFuzzyFinder[T Stringable](items []T) FuzzyFinder[T] {
 		cursor:        0,
 		query:         "",
 		selectedStyle: lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#7D56F4")).
-			Background(lipgloss.Color("#3C3C3C")).
+			Foreground(lipgloss.AdaptiveColor{Light: "#5A35C8", Dark: "#7D56F4"}).
+			Background(lipgloss.AdaptiveColor{Light: "#E8E4F8", Dark: "#3C3C3C"}).
 			Bold(true),
 		normalStyle: lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#FFFFFF")),
+			Foreground(lipgloss.AdaptiveColor{Light: "#111111", Dark: "#FFFFFF"}),
 		promptStyle: lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#00FF00")).
+			Foreground(lipgloss.AdaptiveColor{Light: "#1A7F1A", Dark: "#00FF00"}).
 			Bold(true),
 		matchStyle: lipgloss.NewStyle().
-			Foreground(lipgloss.Color("#FF00FF")).
+			Foreground(lipgloss.AdaptiveColor{Light: "#AA00AA", Dark: "#FF00FF"}).
 			Bold(true),
 	}
 }
@@ -156,13 +156,13 @@ func (f FuzzyFinder[T]) View() string {
 
 	if len(f.filteredItems) == 0 {
 		b.WriteString(
-			lipgloss.NewStyle().Foreground(lipgloss.Color("#888888")).Render("  No matches"),
+			lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "#555555", Dark: "#888888"}).Render("  No matches"),
 		)
 		b.WriteString("\n")
 	}
 
 	b.WriteString("\n")
-	info := lipgloss.NewStyle().Foreground(lipgloss.Color("#666666")).Render(
+	info := lipgloss.NewStyle().Foreground(lipgloss.AdaptiveColor{Light: "#444444", Dark: "#666666"}).Render(
 		"↑/↓: navigate • enter: select • esc: cancel",
 	)
 	b.WriteString(info)
