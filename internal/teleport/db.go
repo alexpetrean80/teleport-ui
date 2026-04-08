@@ -1,11 +1,14 @@
 package teleport
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/alexptr80/teleport-ui/internal/cache"
 )
 
 type TeleportDBLabels struct {
@@ -48,26 +51,47 @@ func (db TeleportDB) String() string {
 	return fmt.Sprintf("%s (%s) - owner: %s", db.Metadata.Name, engine, owner)
 }
 
-func GetTeleportDatabases(ctx context.Context) ([]TeleportDB, error) {
-	cmd := exec.CommandContext(ctx, "tsh", "db", "ls", "--format", "json")
+const dbCacheName = "db"
 
-	stdout, err := cmd.StdoutPipe()
-	if err != nil {
-		return nil, fmt.Errorf("creating stdout pipe: %s", err.Error())
+// GetTeleportDatabases lists databases. When clearCache is false, cached results
+// are returned if available. Filter args are passed through to tsh
+// (e.g. key1=value1, --search=foo, --query='...').
+func GetTeleportDatabases(ctx context.Context, filterArgs []string, clearCache bool) ([]TeleportDB, error) {
+	if clearCache {
+		if err := cache.Clear(dbCacheName); err != nil {
+			return nil, fmt.Errorf("clearing db cache: %w", err)
+		}
 	}
 
-	if err := cmd.Start(); err != nil {
-		return nil, fmt.Errorf("starting command: %s", err.Error())
+	if !clearCache && len(filterArgs) == 0 {
+		var cached []TeleportDB
+		if err := cache.Load(dbCacheName, &cached); err == nil {
+			return cached, nil
+		}
+	}
+
+	args := []string{"db", "ls", "--format", "json"}
+	args = append(args, filterArgs...)
+
+	cmd := exec.CommandContext(ctx, "tsh", args...)
+
+	var stdout bytes.Buffer
+	cmd.Stdout = &stdout
+
+	if err := cmd.Run(); err != nil {
+		return nil, fmt.Errorf("running tsh db ls: %s", err.Error())
 	}
 
 	var dbs []TeleportDB
 
-	if err := json.NewDecoder(stdout).Decode(&dbs); err != nil {
-		return nil, fmt.Errorf("decoding databases: %s", err.Error())
+	if stdout.Len() > 0 {
+		if err := json.Unmarshal(stdout.Bytes(), &dbs); err != nil {
+			return nil, fmt.Errorf("decoding databases: %s", err.Error())
+		}
 	}
 
-	if err := cmd.Wait(); err != nil {
-		return nil, fmt.Errorf("waiting on cmd to finish: %s", err.Error())
+	if len(filterArgs) == 0 {
+		_ = cache.Save(dbCacheName, dbs)
 	}
 
 	return dbs, nil

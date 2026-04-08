@@ -4,5 +4,11 @@ build:
 run:
 	go run main.go
 
-format:
-	go fmt
+test:
+	go test ./...
+
+fmt:
+	golangci-lint run --fix ./...
+
+lint:
+	golangci-lint run ./...
