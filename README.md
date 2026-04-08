@@ -9,6 +9,8 @@ A terminal UI for [Teleport](https://goteleport.com/) that wraps `tsh` with a fu
 
 ## Installation
 
+Download a pre-built binary from the [latest release](https://github.com/alexptr80/teleport-ui/releases/latest), or install with Go:
+
 ```bash
 go install github.com/alexptr80/teleport-ui@latest
 ```
@@ -87,6 +89,30 @@ Results from `tsh` are cached locally at `~/.cache/teleport-ui/` (respects `XDG_
 Cache is bypassed when filter args like `--search` are passed, since filtering is handled server-side by `tsh`.
 
 Use `--clear-cache` / `-c` to force a fresh fetch when resources have changed.
+
+## Development
+
+Requires [just](https://github.com/casey/just) and [golangci-lint](https://golangci-lint.run/) v2.
+
+| Command | Description |
+|---------|-------------|
+| `just build` | Build the binary |
+| `just run` | Run the application |
+| `just test` | Run all tests |
+| `just fmt` | Auto-fix formatting and lint issues |
+| `just lint` | Check for lint issues |
+
+## Releasing
+
+Releases are automated with [Release Please](https://github.com/googleapis/release-please). When commits land on `main`, Release Please opens (or updates) a release PR with a changelog and version bump. Merging that PR creates a GitHub Release and builds binaries for linux and macOS (amd64/arm64).
+
+Use [Conventional Commits](https://www.conventionalcommits.org/) to control versioning:
+
+| Prefix | Version bump |
+|--------|-------------|
+| `fix:` | Patch (0.0.x) |
+| `feat:` | Minor (0.x.0) |
+| `feat!:` / `BREAKING CHANGE` | Major (x.0.0) |
 
 ### Fuzzy finder controls
 
