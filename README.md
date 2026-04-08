@@ -9,16 +9,16 @@ A terminal UI for [Teleport](https://goteleport.com/) that wraps `tsh` with a fu
 
 ## Installation
 
-Download a pre-built binary from the [latest release](https://github.com/alexptr80/teleport-ui/releases/latest), or install with Go:
+Download a pre-built binary from the [latest release](https://github.com/alexpetrean80/teleport-ui/releases/latest), or install with Go:
 
 ```bash
-go install github.com/alexptr80/teleport-ui@latest
+go install github.com/alexpetrean80/teleport-ui@latest
 ```
 
 Or build from source:
 
 ```bash
-git clone https://github.com/alexptr80/teleport-ui.git
+git clone https://github.com/alexpetrean80/teleport-ui.git
 cd teleport-ui
 go build -o teleport-ui .
 ```

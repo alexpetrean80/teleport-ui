@@ -1,4 +1,4 @@
-module github.com/alexptr80/teleport-ui
+module github.com/alexpetrean80/teleport-ui
 
 go 1.25.7
 

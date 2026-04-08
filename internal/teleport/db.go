@@ -8,7 +8,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/alexptr80/teleport-ui/internal/cache"
+	"github.com/alexpetrean80/teleport-ui/internal/cache"
 )
 
 type TeleportDBLabels struct {

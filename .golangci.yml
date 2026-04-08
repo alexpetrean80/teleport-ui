@@ -24,4 +24,4 @@ formatters:
   settings:
     goimports:
       local-prefixes:
-        - github.com/alexptr80/teleport-ui
+        - github.com/alexpetrean80/teleport-ui

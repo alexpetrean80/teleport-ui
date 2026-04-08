@@ -6,9 +6,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/alexptr80/teleport-ui/internal/cache"
-	"github.com/alexptr80/teleport-ui/internal/teleport"
-	"github.com/alexptr80/teleport-ui/internal/ui"
+	"github.com/alexpetrean80/teleport-ui/internal/cache"
+	"github.com/alexpetrean80/teleport-ui/internal/teleport"
+	"github.com/alexpetrean80/teleport-ui/internal/ui"
 )
 
 func main() {
