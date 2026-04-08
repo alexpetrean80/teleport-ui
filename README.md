@@ -94,8 +94,17 @@ Use `--clear-cache` / `-c` to force a fresh fetch when resources have changed.
 
 Requires [just](https://github.com/casey/just) and [golangci-lint](https://golangci-lint.run/) v2.
 
+After cloning, run:
+
+```bash
+just setup
+```
+
+This configures the git hooks path so the pre-commit linter runs automatically.
+
 | Command | Description |
 |---------|-------------|
+| `just setup` | Configure git hooks (run once after cloning) |
 | `just build` | Build the binary |
 | `just run` | Run the application |
 | `just test` | Run all tests |

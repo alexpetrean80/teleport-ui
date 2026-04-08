@@ -1,3 +1,6 @@
+setup:
+	git config core.hooksPath .githooks
+
 build:
 	go build main.go -o /dist/teleport-ui
 
