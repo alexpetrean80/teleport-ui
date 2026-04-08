@@ -14,9 +14,9 @@ import (
 type TeleportKubeLabels map[string]string
 
 type TeleportKubeCluster struct {
-	KubeClusterName string            `json:"kube_cluster_name"`
+	KubeClusterName string             `json:"kube_cluster_name"`
 	Labels          TeleportKubeLabels `json:"labels"`
-	Selected        bool              `json:"selected"`
+	Selected        bool               `json:"selected"`
 }
 
 func (c TeleportKubeCluster) String() string {
