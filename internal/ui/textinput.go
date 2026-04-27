@@ -71,7 +71,7 @@ func (m textInputModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (m textInputModel) View() string {
 	var b strings.Builder
-	b.WriteString(m.promptStyle.Render(m.prompt+": "))
+	b.WriteString(m.promptStyle.Render(m.prompt + ": "))
 	b.WriteString(m.inputStyle.Render(m.value))
 	b.WriteString("█\n\n")
 	b.WriteString(m.hintStyle.Render("enter: confirm • esc: cancel"))

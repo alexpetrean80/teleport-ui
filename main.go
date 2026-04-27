@@ -99,7 +99,7 @@ func runDB(ctx context.Context, filterArgs []string) {
 		log.Fatal(err)
 	}
 	if !confirmed {
-		fmt.Println("Cancelled")
+		fmt.Println("Canceled")
 		return
 	}
 
