@@ -92,8 +92,21 @@ func runDB(ctx context.Context, filterArgs []string) {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("selected %s", selectedDBUser)
-	if err = teleport.ConnectToTeleportDB(ctx, selectedDB, *selectedDBUser); err != nil {
+	if selectedDBUser == nil {
+		fmt.Println("No user selected")
+		return
+	}
+
+	dbName, confirmed, err := ui.RunTextInput("Database name", selectedDB.Metadata.Labels.DBName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if !confirmed {
+		fmt.Println("No database name provided")
+		return
+	}
+
+	if err = teleport.ConnectToTeleportDB(ctx, selectedDB, *selectedDBUser, dbName); err != nil {
 		log.Fatal(err)
 	}
 }
