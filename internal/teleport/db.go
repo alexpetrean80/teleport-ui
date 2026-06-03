@@ -97,7 +97,7 @@ func GetTeleportDatabases(ctx context.Context, filterArgs []string, clearCache b
 	return dbs, nil
 }
 
-func ConnectToTeleportDB(ctx context.Context, db *TeleportDB, user TeleportUser) error {
+func ConnectToTeleportDB(ctx context.Context, db *TeleportDB, user TeleportUser, dbName string) error {
 	cmd := exec.CommandContext(
 		ctx,
 		"tsh",
@@ -107,7 +107,7 @@ func ConnectToTeleportDB(ctx context.Context, db *TeleportDB, user TeleportUser)
 		"--db-user",
 		user.String(),
 		"--db-name",
-		db.Metadata.Labels.DBName,
+		dbName,
 	)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
